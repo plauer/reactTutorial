@@ -8,20 +8,18 @@ var boxStyle = {
 };
 
 var Box = React.createClass({
-  getInitialState: function(){
-    return {
-      value: 'X'
-    }
-  },
-  handleClick: function() {
-    var oldValue = this.state.value;
-    var newValue = oldValue === 'X' ? 'O': 'X';
-    this.setState({
-      value: newValue
-    });
-  },
-
-
+  // getInitialState: function(){
+  //   return {
+  //     value: '-'
+  //   }
+  // },
+  // handleClick: function() {
+  //   var oldValue = this.state.value;
+  //   var newValue = oldValue === 'X' ? 'O': 'X';
+  //   this.setState({
+  //     value: newValue
+  //   });
+  // },
   // componentWillMount: function(){
   //   var _this = this;
   //   this.timer = setInterval(function(){
@@ -37,10 +35,33 @@ var Box = React.createClass({
   // },
   render: function(){
     return (
-      <button style={this.props.style} onClick={this.handleClick}>{this.state.value}</button>
-    )
+      <button style={boxStyle}>
+        {this.props.value}
+      </button>
+    );
   }
 });
 
+var Row = React.createClass({
+  getInitialState: function(){
+    return {
+      clicks: 0,
+      rowValues: ['-', '-', '-']
+    };
+  },
+  render: function(){
+    var boxes = this.state.rowValues.map(function(value, index){
+      return (
+        <Box value={value} key={index} rowIndex={index} />
+      );
+    });
+    return (
+      <div>
+        {boxes}
+      </div>
+    );
+  }
+})
 
-React.render(<Box style={boxStyle}/>, document.body);
+React.render(<Row/>, document.body);
+// React.render(<Box style={boxStyle}/>, document.body);
